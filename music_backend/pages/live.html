@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Emotes to E-Notes</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      max-width: 560px;
+      margin: 1.5em auto;
+      padding: 0 16px;
+    }
+    video {
+      width: 100%;
+      max-width: 320px;
+      background: #222;
+      border-radius: 6px;
+    }
+    button {
+      padding: .6em 1.2em;
+      font-size: 1em;
+    }
+    label {
+      display: block;
+      margin: .5em 0;
+    }
+    input[type=range] {
+      width: 100%;
+    }
+    .row {
+      display: flex;
+      gap: 1em;
+      margin: .6em 0;
+    }
+    .box {
+      flex: 1;
+      background: #f2f2f2;
+      border-radius: 6px;
+      padding: .5em .8em;
+    }
+    .big {
+      font-size: 1.5em;
+      font-weight: bold;
+    }
+    #log {
+      font-size: .85em;
+      color: #555;
+      white-space: pre-line;
+    }
+  </style>
+</head>
+<body>
+  <h2>Emotes to E-Notes</h2>
+
+  <video id="cam" autoplay muted playsinline></video>
+
+  <div class="box">
+    Emote reading
+    <div class="big" id="en">-</div>
+    <div id="batch"></div>
+  </div>
+
+  <div class="row">
+    <div class="box">
+      Valence
+      <div class="big" id="vv">-</div>
+    </div>
+    <div class="box">
+      Arousal
+      <div class="big" id="av">-</div>
+    </div>
+  </div>
+
+  <label><input type="checkbox" id="manual"> no camera: use sliders instead</label>
+  <label>Valence <input id="sv" type="range" min="-1" max="1" step="0.05" value="0"></label>
+  <label>Arousal <input id="sa" type="range" min="-1" max="1" step="0.05" value="0"></label>
+
+  <button id="btn" onclick="toggle()">Start</button>
+  <p id="log"></p>
+
+  <script src="/pages/live.js"></script>
+</body>
+</html>

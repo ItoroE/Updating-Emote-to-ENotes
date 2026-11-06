@@ -1,8 +1,3 @@
-# pls_numpy.py  -  loads the face library's emotion model without scikit-learn.
-# The model (models/model_emotion_pls=30_fullfeatures=False.joblib) is a scikit-learn 0.23 PLSRegression. Windows
-# Smart App Control blocks scikit-learn's compiled files on this PC, and newer scikit-learn versions changed the
-# PLS internals anyway. A fitted PLS model is only a linear map, so the file is unpickled with a stand-in class and
-# predicted with numpy, exactly as scikit-learn 0.23 did:  ((X - x_mean_) / x_std_) @ coef_ + y_mean_
 import pickle
 
 import numpy as np
@@ -20,7 +15,8 @@ class PLSNumpy:
         self.x_mean = np.asarray(pls.x_mean_, dtype=np.float64)
         self.x_std = np.asarray(pls.x_std_, dtype=np.float64)
         self.y_mean = np.asarray(pls.y_mean_, dtype=np.float64)
-        self.coef = np.asarray(pls.coef_, dtype=np.float64)                  # (n_features, n_targets) in 0.23
+        # (n_features, n_targets) in 0.23
+        self.coef = np.asarray(pls.coef_, dtype=np.float64)                  
 
     def predict(self, X):
         X = np.atleast_2d(np.asarray(X, dtype=np.float64))
@@ -37,7 +33,7 @@ class _Unpickler(NumpyUnpickler):
 def load(path):
     # drop-in for joblib.load on the emotion model file
     with open(path, "rb") as f:
-        out = _Unpickler(path, f, ensure_native_byte_order=False).load()   # plain (uncompressed) joblib file
+        out = _Unpickler(path, f, ensure_native_byte_order=False).load()  
     if isinstance(out, dict) and "model" in out:
         out["model"] = PLSNumpy(out["model"])
     return out

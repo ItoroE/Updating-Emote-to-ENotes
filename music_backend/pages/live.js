@@ -1,4 +1,5 @@
-const EMOTION = location.protocol + '//' + location.hostname + ':8000';
+//server that connects music and emotion 
+const EMOTION = '/emotion-api';     
 const $ = id => document.getElementById(id), sleep = ms => new Promise(r => setTimeout(r, ms));
 let run = 0, running = false, ctx, nextTime = 0, cur = {v: 0, a: 0}, stream, abort;
 
@@ -27,7 +28,7 @@ async function camLoop(me){
   }
 }
 
-// chunks play back to back; each is requested as late as possible so it use newest mood to play
+// chunks play back to back and  each is requested as late as possible so it use newest mood to play
 async function musicLoop(me){        
   const sid = 'run' + me + '-' + Math.random().toString(36).slice(2);   
   let first = true, makeTime = 3;
@@ -56,8 +57,8 @@ async function musicLoop(me){
 }
 
 // silence everything now, queued chunks get deleted, camera no longer take input
+function stop(){
   running = false; run++;
-function stop(){                     
   abort && abort.abort();
   ctx && ctx.close(); ctx = null;
   stream && stream.getTracks().forEach(t => t.stop()); stream = null; $('cam').srcObject = null;

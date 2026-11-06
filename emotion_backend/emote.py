@@ -12,7 +12,7 @@ from facial_expression_analysis.source.emotions_dlib import EmotionsDlib, plot_l
 import facial_expression_analysis.source.emotions_dlib as emotions_dlib
 import pls_numpy
 
-# read the emotion model with numpy instead of scikit-learn (blocked by Smart App Control on this PC, see pls_numpy.py)
+# loading model with numpy
 emotions_dlib.load = pls_numpy.load
 
 
